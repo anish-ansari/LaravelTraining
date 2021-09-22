@@ -26,4 +26,5 @@ Route::get('/', function () {
 //     echo $id;
 // });
 
+Route::get('delete/{id}','App\Http\Controllers\StudentController@destroy');
 Route::resource('students', StudentController::class);
