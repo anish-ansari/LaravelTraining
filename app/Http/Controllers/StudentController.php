@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Session;
 
 class StudentController extends Controller
 {
@@ -31,7 +30,6 @@ class StudentController extends Controller
     public function create()
     {
         //
-        return view('student.create');
     }
 
     /**
@@ -41,22 +39,8 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        $request->validate([
-            'roll_no' => 'required|unique:students',
-            'name' => 'required',
-            'phone' => 'required',
-        ]);
-
-        $page = Student::create([
-            'roll_no' => $request->roll_no,
-            'name' => $request->name,
-            'phone' => $request->phone,
-
-        ]);
-        if($page){
-            return redirect('students');
-        }
+    {
+        //
     }
 
     /**
@@ -76,12 +60,9 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
         //
-        $page = Student::where('id',$id)->first();
-        return view('student.edit',compact('page'));
-
     }
 
     /**
@@ -91,18 +72,9 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Student $student)
     {
         //
-        $page = Student::where('id',$id)->first();
-        $page->update([
-            'roll_no' => $request->roll_no,
-            'name' => $request->name,
-            'phone' => $request->phone,
-        ]);
-        if($page){
-            return redirect('students')->with('success','Upadte Successfully');            
-        } return redirect('students')->with('failed','Could not update');            
     }
 
     /**
@@ -111,12 +83,8 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
         //
-        $page = Student::where('id',$id)->delete();
-        if($page){
-            return redirect('students')->with('deleted','Deleted Successfully');
-        }return redirect('students')->with('delete-failed','Could not soft delete');
     }
 }
